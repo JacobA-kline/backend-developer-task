@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=superhero-db
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data/pgdata
+      - ./scripts/init.sh:/docker-entrypoint-initdb.d/init.sh
+    restart: unless-stopped
+
+  api:
+    build: .
+    container_name: flask-api
+    ports:
+      - '5000:5000'
+    depends_on:
+      - postgres
+    restart: unless-stopped
