@@ -1,13 +1,13 @@
 # Flask API for Superheroes
 
-This API allows users to create, read, list, and delete  superheroes using a Flask server and a PostgreSQL database.
+This API allows users to create, read, list, and delete  superheroes using a Flask server and a PostgresSQL database.
 
 ## Requirements
 
 * Python 3.6 or higher
 * Flask
 * Flask-SQLAlchemy
-* PostgreSQL
+* PostgresSQL
 * Docker
 
 ## Endpoints
