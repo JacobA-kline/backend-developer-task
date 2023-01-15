@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask API Front-end</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="jumbotron">
+    <h1 class="text-center">User Management</h1>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <button class="btn btn-primary btn-block" id="list-all-button">List All</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-primary btn-block" id="get-user-button">Get User by ID</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-danger btn-block" id="delete-user-button">Delete User</button>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6" id="user-list"></div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6" id="user-details"></div>
+    </div>
+</div>
+<div class="form-group">
+    <label for="user-id-input">User Id:</label>
+    <input type="text" class="form-control username" id="user-id-input" placeholder="Id Number" name="username">
+</div>
+<div class="table">
+    <table class="table" id="users-table">
+    </table>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/[email protected]/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.getElementById("delete-user-button").addEventListener("click", function(){
+    let user_id = document.getElementById("user-id-input").value;
+    if (!user_id) {
+      alert("Please enter a user ID");
+      return;
+    }
+    fetch('http://localhost/users/' + user_id, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          alert("User deleted successfully");
+        } else {
+          alert(response.statusText);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  });
+document.getElementById("list-all-button").addEventListener("click", function(){
+  fetch('http://localhost/users/all')
+    .then(response => response.json())
+    .then(data => {
+        let users = data;
+        let table = document.getElementById("users-table");
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Gender</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        `
+        let tbody = table.querySelector("tbody");
+        for (var key in users) {
+            if (users.hasOwnProperty(key)) {
+                let user = JSON.parse(users[key]);
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${user.user_id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.first_name}</td>
+                    <td>${user.last_name}</td>
+                    <td>${user.gender}</td>
+                `
+                tbody.appendChild(row);
+            }
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+document.getElementById("get-user-button").addEventListener("click", function(){
+  let user_id = document.getElementById("user-id-input").value;
+   if (!user_id) {
+        alert("Please enter a user id.");
+        return;
+    }
+  fetch(`http://localhost/users/${user_id}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+        let user = data;
+        let table = document.getElementById("users-table");
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Gender</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${user.user_id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.first_name}</td>
+                    <td>${user.last_name}</td>
+                    <td>${user.gender}</td>
+                </tr>
+            </tbody>
+        `
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert(error);
+    });
+});
+
+
+</script>
+</body>
+</html>
