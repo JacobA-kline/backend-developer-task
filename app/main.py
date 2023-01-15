@@ -21,11 +21,12 @@ class User(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
-        return f"{self.username, self.email, self.first_name, self.last_name, self.gender}"
+        return f"{self.user_id, self.username, self.email, self.first_name, self.last_name, self.gender}"
 
     def to_json(self):
         # Convert the User object to a dictionary
         user_dict = {
+            'user_id': self.user_id,
             'username': self.username,
             'email': self.email,
             'first_name': self.first_name,

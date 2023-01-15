@@ -16,10 +16,21 @@ services:
     restart: unless-stopped
 
   api:
-    build: .
+    build: ./app
     container_name: flask-api
     ports:
       - '5000:5000'
     depends_on:
       - postgres
+    restart: unless-stopped
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - '80:80'
+    links:
+      - api
+    depends_on:
+      - api
     restart: unless-stopped
