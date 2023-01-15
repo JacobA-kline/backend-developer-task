@@ -20,7 +20,7 @@ psql -d superhero-db -c "CREATE TABLE SuperHeroes(
   gender VARCHAR(10)
 );
 INSERT INTO SuperHeroes (user_id, username, first_name, last_name, email, gender) VALUES
-(1, 'Superman', 'CLark', 'Kent', 'CLarkKent@yahoo.com', 'Male'),
+(1, 'Superman', 'Clark', 'Kent', 'CLarkKent@yahoo.com', 'Male'),
 (2, 'Batman', 'Bruce', 'Wayne', 'BruceWayne@gmail.com', 'Male'),
 (3, 'Spiderman', 'Peter', 'Parker', 'PeterParker@hotmail.com', 'Male'),
 (4, 'Hulk', 'Bruce', 'Banner', 'BruceBanner@gmail.com', 'Male'),
