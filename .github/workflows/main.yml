@@ -1,12 +1,13 @@
 name: Deploy App
 
 on:
-  workflow_dispatch:
-    inputs:
-      version: "1.0"
   push:
     branches:
       - master
+  workflow_dispatch:
+    inputs:
+      version: "1.0"
+
 
 jobs:
   build:
