@@ -5,13 +5,16 @@
 # Last Modified: 16/01/23
 
 # Description:
-# Push image to dockerhub
+# Push images to dockerhub
 
 docker images
 
+version=${1:-latest}
+
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  for container in $(docker-compose config --services); do
-      echo "Pushing $container with version: $VERSION"
-      docker tag "$container" "$DOCKER_USERNAME"/usermanagement/"$container":"$VERSION"
-      docker push "$DOCKER_USERNAME"/usermanagement/"$container":"$VERSION"
+
+  for service in $(docker-compose config --services); do
+    echo "Tagging and pushing $service:$version"
+    docker tag "$service":latest "$DOCKER_USERNAME"/usermanagement/"$service":"$version"
+    docker push "$DOCKER_USERNAME"/usermanagement/"$service":"$version"
   done
