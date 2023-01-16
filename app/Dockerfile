@@ -1,6 +1,4 @@
-FROM python:3.7-alpine
-
-EXPOSE 5000
+FROM python:3.7-alpine as build-stage
 
 COPY . /app
 
@@ -10,8 +8,16 @@ RUN python3 -m venv venv && . venv/bin/activate
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-CMD ["python3", "main.py"]
 
+FROM python:3.7-alpine
+
+COPY --from=build-stage /app /app
+
+WORKDIR /app
+
+EXPOSE 5000
+
+CMD ["python3", "main.py"]
 
 
 
