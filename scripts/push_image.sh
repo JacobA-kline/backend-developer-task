@@ -7,9 +7,9 @@
 # Description:
 # Push image to dockerhub
 
- echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     for container in $(docker-compose config --services); do
         echo "Pushing $container"
-        docker tag $container ${{ secrets.DOCKER_USERNAME }}/usermanagement/$container
-        docker push ${{ secrets.DOCKER_USERNAME }}/usermanagement/$container
+        docker tag "$container" "$DOCKER_USERNAME"/usermanagement/"$container"
+        docker push "$DOCKER_USERNAME"/usermanagement/"$container"
     done
