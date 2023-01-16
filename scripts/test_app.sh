@@ -8,7 +8,7 @@
 # Test for app endpoint @ http://localhost/user-management/
 
 
-curl -I https://www.google.com
+curl -I http://localhost/user-management/
 status_code=$?
 if [ $status_code -ne 0 ]; then
   echo "Error: Unexpected status code $status_code"
