@@ -25,8 +25,7 @@ jobs:
     - name: Test app
       run: |
         sleep 10
-        curl http://localhost:5000/users/all/
-        curl http://localhost/user-management/
+        sh scripts/test_app.sh
     - name: Turn down
       run: |
         docker-compose down
