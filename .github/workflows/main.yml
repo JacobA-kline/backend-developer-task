@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
-    inputs:
-      version: "1.0"
-
 
 jobs:
   build:
@@ -38,7 +34,8 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        VERSION: 1.0
       run: |
-        sh scripts/push_image.sh ${{ inputs.version }}
+        sh scripts/push_image.sh
                
 
