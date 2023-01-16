@@ -32,8 +32,6 @@ jobs:
 
     - name: Push to dockerhub
       run: |
-        echo "Checking"
-        echo ${{ secrets.DOCKER_USERNAME }}
-        echo ${{ secrets.DOCKER_PASSWORD }}
-        echo ${{ secrets.DOCKER_PASSWORD }} | sed 's/ ./& /g'        
+        sh scripts/push_image.sh
+               
 
