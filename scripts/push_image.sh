@@ -15,7 +15,7 @@ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
   for service in $(docker-compose config --services); do
     echo "Tagging and pushing $service:$version"
-    docker tag "$service":latest "$DOCKER_USERNAME"/usermanagement/"$service":"$version"
-#    docker push "$DOCKER_USERNAME"/usermanagement/"$service":"$version"
+    docker tag "$service":latest "$DOCKER_USERNAME"/usermanagement/:"$service""$version"
+    docker push "$DOCKER_USERNAME"/usermanagement/:"$service""$version"
   done
 docker images
