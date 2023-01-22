@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.flaskser.serviceName }}
+spec:
+  selector:
+    app: {{ .Values.flaskser.appLabel }}
+  ports:
+  - name: http
+    protocol: TCP
+    port: {{ .Values.flaskser.servicePort }}
+    targetPort: {{ .Values.flaskser.targetPort }}
+  type: {{ .Values.flaskser.serviceType }}

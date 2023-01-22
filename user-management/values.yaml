@@ -1,0 +1,31 @@
+flaskdep:
+    name: flask-app
+    replicas: 1
+    image: jacoabkline/api:1.0
+    containerPort: 5000
+    env:
+      POSTGRES_URL: postgresql://postgres:postgres@postgres-db:5432/superhero-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: superhero-db
+
+nginxdep:
+    name: nginx
+    replicas: 1
+    image: jacoabkline/nginx:1.0
+    containerPort: 80
+
+flaskser:
+  serviceName: flask-app-service
+  appLabel: flask-app
+  servicePort: 5000
+  targetPort: 5000
+  serviceType: ClusterIP
+
+nginxser:
+  serviceName: nginx-app-service
+  appLabel: nginx-app
+  servicePort: 80
+  targetPort: 80
+  serviceType: NodePort
+

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.flaskdep.name }}
+  labels:
+    app: {{ .Values.flaskdep.name }}
+spec:
+  replicas: {{ .Values.flaskdep.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.flaskdep.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.flaskdep.name }}
+    spec:
+      containers:
+      - name: {{ .Values.flaskdep.name }}
+        image: {{ .Values.flaskdep.image }}
+        ports:
+        - containerPort: {{ .Values.flaskdep.containerPort }} 
+        env:
+        - name: POSTGRES_URL
+          value: {{ .Values.flaskdep.env.POSTGRES_URL }}
+        - name: POSTGRES_USER
+          value: {{ .Values.flaskdep.env.POSTGRES_USER }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.flaskdep.env.POSTGRES_PASSWORD }}
+        - name: POSTGRES_DB
+          value: {{ .Values.flaskdep.env.POSTGRES_DB }}  
