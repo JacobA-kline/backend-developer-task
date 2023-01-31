@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  serviceName: postgres
+  replicas: {{ .Values.postgresdep.replicas }}
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: {{ .Values.postgresdep.image }}
+        env:
+        - name: POSTGRES_USER
+          value: {{ .Values.postgresdep.env.POSTGRES_USER }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.postgresdep.env.POSTGRES_PASSWORD }}
+        - name: POSTGRES_DB
+          value: {{ .Values.postgresdep.env.POSTGRES_DB }}
+        - name: PGDATA
+          value: {{ .Values.postgresdep.env.PGDATA }}
+        ports:
+        - containerPort: {{ .Values.postgresdep.containerPort }}
+        volumeMounts:
+        - name: postgres-data
+          mountPath: {{ .Values.postgresdep.mountPath }}
+        - name: postgres-init-scripts
+          mountPath: {{ .Values.postgresdep.initScriptsPath }}
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.storage }}
+  - metadata:
+      name: postgres-init-scripts
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.initScriptsStorage }}

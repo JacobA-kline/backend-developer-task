@@ -29,3 +29,15 @@ nginxser:
   targetPort: 80
   serviceType: NodePort
 
+postgresdep:
+  replicas: 1
+  image: jacoabkline/postgres:1.0
+  env:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_DB: superhero-db
+    PGDATA: /var/lib/postgresql/data/pgdata
+  containerPort: 5432
+  volumeMounts:
+    postgres-data: /var/lib/postgresql/data/pgdata
+    postgres-init-scripts: /docker-entrypoint-initdb.d/init.sh

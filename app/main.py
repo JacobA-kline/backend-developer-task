@@ -1,11 +1,12 @@
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 import json
 import re
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@postgres-db:5432/superhero-db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@postgres-db/superhero-db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -43,12 +44,17 @@ def is_valid_email(email):
 
 
 def is_valid_gender(gender):
-    return gender.lower() == 'male' or gender.lower() == 'female'
+    return gender.lower() == 'male' or gender.lower() == 'female' or gender.lower() == 'other'
 
 
 @app.route('/users', methods=['POST'])
 def create_user():
     """Creates a new user, accepting a JSON format body with all required parameters"""
+    max_user_id = db.session.query(func.max(User.user_id)).scalar()
+    if max_user_id is None:
+        new_user_id = 1
+    else:
+        new_user_id = max_user_id + 1
     data = request.get_json()
     try:
         username = data['username']
@@ -61,7 +67,8 @@ def create_user():
     else:
         if is_valid_email(email=email) and is_valid_gender(gender=gender):
             # create new user object
-            user = User(username=username, email=email, gender=gender, first_name=first_name, last_name=last_name)
+            user = User(user_id=new_user_id, username=username, email=email, gender=gender, first_name=first_name,
+                        last_name=last_name)
             # add user to database
             db.session.add(user)
             db.session.commit()

@@ -33,6 +33,36 @@
     <table class="table" id="users-table">
     </table>
 </div>
+  <div class="container">
+    <h2>Create User</h2>
+    <form action="#" id="form">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="firstname">First Name:</label>
+        <input type="text" class="form-control" id="firstname" required>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Last Name:</label>
+        <input type="text" class="form-control" id="lastname" required>
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select class="form-control" id="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+  </div>
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -140,6 +170,34 @@ document.getElementById("get-user-button").addEventListener("click", function(){
     });
 });
 
+document.getElementById("form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  let user = {
+    username: document.getElementById("username").value,
+    email: document.getElementById("email").value,
+    first_name: document.getElementById("firstname").value,
+    last_name: document.getElementById("lastname").value,
+    gender: document.getElementById("gender").value
+  };
+
+
+  fetch('http://localhost/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  })
+    .then(response => {
+      if (response.ok) {
+        alert("User created successfully");
+      } else {
+        alert(response.statusText);
+      }
+    })
+    .catch(error => console.error('Error:', error));
+});
 
 </script>
 </body>
