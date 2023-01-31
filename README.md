@@ -1,14 +1,11 @@
 # Flask API for Superheroes
 
-This API allows users to create, read, list, and delete  superheroes using a Flask server and a PostgresSQL database.
+This API allows users to create, read, list, and delete  superheroes using a UI, Flask server and a PostgresSQL database.
 
 ## Requirements
 
-* Python 3.6 or higher
-* Flask
-* Flask-SQLAlchemy
-* PostgresSQL
 * Docker
+* Docker Compose
 
 ## Endpoints
 
@@ -53,10 +50,12 @@ Returns a message indicating success or failure, along with a corresponding HTTP
 The application includes validation for email addresses and gender. Email addresses are considered valid if they match the pattern `[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+`. Gender is considered valid if it is either "male" or "female". If either of these validations fail, the request will return an error message and a status code of `400 Bad Request`.
 
 ## UI
-- A Nginx container serves a UI at localhost/user-management with 3 buttons:
+- A Nginx container serves a UI at localhost/user-management with the following options:
     - View Specific User 
     - View All Users
     - Delete User
+    - Create User
+    - Update User
 
 
 ## Running The Application

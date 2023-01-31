@@ -6,7 +6,10 @@
 </head>
 <body>
 <div class="jumbotron">
-    <h1 class="text-center">User Management</h1>
+    <h1 class="text-center" style="
+    margin-top: 0px;
+    border-top-width: 100px;
+    margin-bottom: 100px;">User Management</h1>
     <div class="row justify-content-center">
         <div class="col-3">
             <button class="btn btn-primary btn-block" id="list-all-button">List All</button>
@@ -34,7 +37,7 @@
     </table>
 </div>
   <div class="container">
-    <h2>Create User</h2>
+    <h2>Create/Update User</h2>
     <form action="#" id="form">
       <div class="form-group">
         <label for="username">Username:</label>
@@ -60,7 +63,7 @@
           <option value="other">Other</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Create</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
 
@@ -181,9 +184,18 @@ document.getElementById("form").addEventListener("submit", function(e){
     gender: document.getElementById("gender").value
   };
 
+  let userId = document.getElementById("user-id-input").value;
 
-  fetch('http://localhost/users', {
-    method: 'POST',
+  let url = 'http://localhost/users';
+  let method = 'POST';
+
+  if (userId) {
+    url = `http://localhost/users/${userId}`;
+    method = 'PUT';
+  }
+
+  fetch(url, {
+    method: method,
     headers: {
       'Content-Type': 'application/json'
     },
@@ -191,7 +203,7 @@ document.getElementById("form").addEventListener("submit", function(e){
   })
     .then(response => {
       if (response.ok) {
-        alert("User created successfully");
+        alert(userId ? "User updated successfully" : "User created successfully");
       } else {
         alert(response.statusText);
       }
