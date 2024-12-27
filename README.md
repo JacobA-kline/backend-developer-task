@@ -50,7 +50,7 @@ Returns a message indicating success or failure, along with a corresponding HTTP
 The application includes validation for email addresses and gender. Email addresses are considered valid if they match the pattern `[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+`. Gender is considered valid if it is either "male" or "female". If either of these validations fail, the request will return an error message and a status code of `400 Bad Request`.
 
 ## UI
-- A Nginx container serves a UI at localhost/user-management with the following options:
+- A Nginx container serves a UI at localhost/user-management/ with the following options:
     - View Specific User 
     - View All Users
     - Delete User

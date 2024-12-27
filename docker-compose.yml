@@ -20,14 +20,15 @@ services:
     image: api:latest
     container_name: flask-api
     ports:
-      - '5000:5000'
+      - '8080:8080'
     depends_on:
       - postgres
     restart: unless-stopped
 
   nginx:
-    build: ./nginx
-    image: nginx:latest
+    build:
+      context: ./nginx
+    image: custom-nginx:latest
     container_name: nginx
     ports:
       - '80:80'

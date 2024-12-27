@@ -1,10 +1,19 @@
+import os
+
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 import json
 import re
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
+
+# Get the port from the environment variable, default to 5000 if not set
+PORT = os.getenv('FLASK_PORT', 5000)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@postgres-db/superhero-db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -104,7 +113,6 @@ def list_all_users():
         # return user data as JSON
         return json.dumps(user_dict)
 
-
 @app.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
     """Updates the username or email of the user with the specified ID. Parameters: user_id (str): The ID of the user
@@ -147,4 +155,4 @@ def delete_user(user_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=int(PORT))
