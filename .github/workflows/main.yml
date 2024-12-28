@@ -23,7 +23,7 @@ jobs:
 
     - name: Test app
       run: |
-        sleep 20
+        sleep 30
         sh scripts/test_app.sh
 
     - name: Turn down
