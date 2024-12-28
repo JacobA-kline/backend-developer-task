@@ -15,7 +15,7 @@ if [ $status_code -ne 0 ]; then
   exit 1
 fi
 
-curl -I http://localhost:5000/users/all
+curl -I http://localhost:8080/users/all
 status_code=$?
 if [ $status_code -ne 0 ]; then
   echo "Error: Unexpected status code $status_code for /users/all"
