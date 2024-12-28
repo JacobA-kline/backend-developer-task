@@ -15,11 +15,11 @@ jobs:
 
     - name: Build
       run: |
-        docker-compose build
+        docker compose build
 
     - name: Run app
       run: |
-        docker-compose up -d
+        docker compose up -d
 
     - name: Test app
       run: |
@@ -28,7 +28,7 @@ jobs:
 
     - name: Turn down
       run: |
-        docker-compose down
+        docker compose down
 
     - name: Push to dockerhub
       env:
